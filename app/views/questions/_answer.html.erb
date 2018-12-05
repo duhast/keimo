@@ -1,0 +1,12 @@
+<br/>
+<div class="card">
+  <div class="card-header">
+    <%= image_tag answer.user.avatar_url, width: 32, height: 32 %>
+    <%= answer.user.name %> answered at <%= answer.created_at.strftime("%B %d, %Y") %>
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote">
+      <p><%= answer.text %></p>
+    </blockquote>
+  </div>
+</div>

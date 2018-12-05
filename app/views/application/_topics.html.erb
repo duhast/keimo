@@ -1,0 +1,11 @@
+<div class="card topic-list">
+  <div class="card-header"><b>Hottest topics</b></div>
+  <ul class="list-group list-group-flush">
+    <% @topics.each do |topic| %>
+      <li class="list-group-item">
+        <span class="badge badge-pill badge-info"><%= topic['questions_count'] %></span>
+        <%= link_to topic.title, questions_path(topic_id: topic.id) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keimo</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+  <body>
+    <%= render partial: 'navbar' %>
+    <div class="container">
+      <div class="row">
+        <p id="notice"><%= notice %></p>
+      </div>
+      <div class="row">
+        <div class="col-md-3 content-wrapper">
+          <%= render partial: 'topics' %>
+        </div>
+        <div class="col-md-9">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <footer>
+      Copyright &copy; 2018 <%= link_to 'duhast', 'https://github.com/duhast', target: '_blank' %>
+    </footer>
+  </body>
+</html>
