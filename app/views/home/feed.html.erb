@@ -1,2 +1,12 @@
-<h1>Home#feed</h1>
-<p>Find me in app/views/home/feed.html.erb</p>
+<% if user_signed_in? && @followed_users_questions.count > 0 %>
+  <h2>Top <%= HomeController::QUESTION_LIMIT %> questions by users you follow</h2>
+  <%= render partial: 'questions/question_list', locals: {questions: @followed_users_questions} %>
+<% end %>
+
+<% if user_signed_in? && @followed_questions.count > 0 %>
+  <h2>Top <%= HomeController::QUESTION_LIMIT %> questions you follow </h2>
+  <%= render partial: 'questions/question_list', locals: {questions: @followed_questions} %>
+<% end %>
+
+<h2><%= HomeController::QUESTION_LIMIT %> hottest questions</h2>
+<%= render partial: 'questions/question_list', locals: {questions: @questions} %>

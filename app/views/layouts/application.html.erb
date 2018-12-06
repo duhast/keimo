@@ -10,10 +10,8 @@
   </head>
   <body>
     <%= render partial: 'navbar' %>
+    <div><%= flashes %></div>
     <div class="container">
-      <div class="row">
-        <p id="notice"><%= notice %></p>
-      </div>
       <div class="row">
         <div class="col-md-3 content-wrapper">
           <%= render partial: 'topics' %>

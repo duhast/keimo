@@ -34,6 +34,10 @@ class User
   validates :name, presence: true
   validates :title, presence: true
 
+  before_create do
+    self.avatar_url = "https://robohash.org/#{self.name.parameterize}.png?size=300x300&set=set2" if self.avatar_url.blank?
+  end
+
 
 
 end

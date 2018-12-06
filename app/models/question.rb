@@ -16,7 +16,7 @@ class Question
   validates :text, presence: true
 
   def author_name
-    self.anonymous ? 'random passer' : self.user.name
+    self.anonymous ? 'Random passer' : self.user.name
   end
 
   def author_avatar

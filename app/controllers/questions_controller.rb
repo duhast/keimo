@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
+  include Concerns::HasFollow
 
+  before_action :authenticate_user!, only: [:new, :edit, :create, :delete]
+  before_action :set_question, except: :index
 
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
-
-  # GET /questions
   def index
     if params[:topic_id].present?
       @topic = Topic.find(params[:topic_id])
@@ -13,23 +13,20 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # GET /questions/1
   def show
+    @answers = @question.answers.desc(:created_at)
+    @answer = @question.answers.build
   end
 
-  # GET /questions/new
   def new
     @question = Question.new
   end
 
-  # GET /questions/1/edit
   def edit
   end
 
-  # POST /questions
   def create
-    @question = Question.new(question_params)
-
+    @question = Question.new(question_params.merge(user: current_user))
     if @question.save
       redirect_to @question, notice: 'Question was successfully created.'
     else
@@ -37,29 +34,36 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /questions/1
   def update
-    if @question.update(question_params)
+    if @question.user != current_user
+      @question.errors.add(:base, 'Question created by another user')
+      render :edit
+    elsif @question.update(question_params)
       redirect_to @question, notice: 'Question was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /questions/1
   def destroy
-    @question.destroy
-    redirect_to questions_url, notice: 'Question was successfully destroyed.'
+    if @question.user == current_user && @question.destroy
+      redirect_to questions_url, notice: 'Question was successfully destroyed.'
+    else
+      redirect_to questions_url, alert: 'Cannot delete this question.'
+    end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question
-      @question = Question.find(params[:id])
-    end
+protected
+  def set_question
+    @question = Question.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def question_params
-      params.require(:question).permit(:text)
-    end
+  def question_params
+    params.require(:question).permit(:text, :anonymous, :topic_id)
+  end
+
+  def follow_subject
+    @question
+  end
+
 end

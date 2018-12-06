@@ -1,0 +1,7 @@
+<% if user_signed_in?%>
+  <% if subject.followers.include?(current_user.id) %>
+    <button type="button" class="btn btn-sm btn-warning" disabled>You're following</button>
+  <% else %>
+    <%= link_to "Follow #{subject.class.name.humanize}", subject.is_a?(Question) ? follow_question_path(subject) : follow_user_path(subject), method: :patch, class: 'btn btn-sm btn-warning' %>
+  <% end %>
+<% end %>

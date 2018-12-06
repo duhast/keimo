@@ -1,0 +1,9 @@
+<ul class="question-list">
+  <% questions.each do |question| %>
+    <li class="question-item">
+      <%= link_to truncate(question.text, length: 60), question %>
+      <small>by <%= question.author_name %>, <%= time_ago_in_words(question.created_at) %> ago</small>
+    </li>
+  <% end %>
+</ul>
+

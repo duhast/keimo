@@ -5,17 +5,35 @@
       <div class="card-body">
         <p class="card-text">
           <%=  @question.author_name %> asked on <%= @question.created_at.strftime("%B %d, %Y") %>
+          <%= render partial: 'follow_button', locals: {subject: @question.user} %>
         </p>
       </div>
     </div>
   </div>
   <div class="col-md-7">
     <p class="lead"><%= @question.text %></p>
-    <%= link_to 'Back', questions_path %>
+    <div>
+      <%= render partial: 'follow_button', locals: {subject: @question} %>
+      <%= link_to 'Edit', edit_question_path(@question), class: 'btn btn-light' if user_signed_in? && @question.user == current_user %>
+      <%= link_to 'Back', questions_path, class: 'btn btn-default' %>
+    </div>
   </div>
 </div>
 
-<% @question.answers.each do |answer| %>
+<% if user_signed_in? %>
+  <%= form_with(model: [@question, @answer], local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :text, 'Provide your answer' %>
+      <%= form.text_area :text, class: 'form-control' %>
+      <% if @answer.errors.any? %>
+        <div class="invalid-feedback"><%= @answer.errors.full_messages.first %></div>
+      <% end %>
+    </div>
+    <%= form.submit 'Submit', class: 'btn btn-success' %>
+  <% end %>
+<% end %>
+
+<% @answers.each do |answer| %>
   <%= render partial: 'answer', locals: {answer: answer} %>
 <% end %>
 
