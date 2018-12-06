@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   include Concerns::HasFollow
 
   before_action :authenticate_user!, only: [:new, :edit, :create, :delete]
-  before_action :set_question, except: :index
+  before_action :set_question, except: [:new, :index]
 
   def index
     if params[:topic_id].present?
