@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 protected
 
   def load_topics
-    @topics = Topic.desc(:questions_count).limit(5)
+    @top_topics = Topic.desc(:questions_count).limit(5)
   end
 
   def configure_permitted_parameters

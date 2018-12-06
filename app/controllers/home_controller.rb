@@ -10,4 +10,8 @@ class HomeController < ApplicationController
     @questions = Question.desc(:answers_count).limit(QUESTION_LIMIT)
   end
 
+  def topics
+    @topics = Topic.asc(:title)
+  end
+
 end

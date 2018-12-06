@@ -1,0 +1,9 @@
+<h2>Topics</h2>
+<ul>
+  <% @topics.each do |topic| %>
+  <li>
+    <span class="badge badge-pill badge-info"><%= topic['questions_count'] %></span>
+    <%= link_to topic.title, questions_path(topic_id: topic.id) %>
+  </li>
+  <% end %>
+</ul>

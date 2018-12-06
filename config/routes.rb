@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'home/feed'
+  get 'home/topics', as: :topics
 
   resources :questions do
     member do
